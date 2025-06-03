@@ -1,207 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cosmic Contact</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      min-height: 100vh;
-      background-image: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q80');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      font-family: 'Inter', sans-serif;
-    }
-    .glass-effect {
-      background: rgba(20, 20, 30, 0.3);
-      backdrop-filter: blur(10px);
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .form-container {
-      animation: fadeIn 1s ease-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .input-group {
-      position: relative;
-    }
-    .input-field {
-      transition: all 0.3s ease;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
-    .input-field:focus {
-      border-color: #3b82f6;
-      box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
-    }
-    .input-label {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #cbd5e1;
-      pointer-events: none;
-      transition: all 0.3s ease;
-    }
-    .input-field:focus + .input-label,
-    .input-field:not(:placeholder-shown) + .input-label {
-      top: -10px;
-      font-size: 0.75rem;
-      color: #3b82f6;
-      background: rgba(20, 20, 30, 0.9);
-      padding: 0 4px;
-    }
-    .btn-glow:hover {
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
-      transform: translateY(-2px);
-      transition: all 0.3s ease;
-    }
-    .spinner {
-      border: 3px solid rgba(255, 255, 255, 0.3);
-      border-top: 3px solid #3b82f6;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      animation: spin 0.8s linear infinite;
-      display: none;
-      margin-left: 8px;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .success-check {
-      display: none;
-      font-size: 1.5rem;
-      color: #22c55e;
-      animation: popIn 0.4s ease;
-    }
-    @keyframes popIn {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data Collection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-image: url('https://images.unsplash.com/photo-1707343843437-caacff5cfa74?q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+            position: relative;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 48px;
+            color: #7f8c8d;
+            transition: all 0.3s ease;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #34495e;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 12px 12px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        textarea {
+            padding-left: 15px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 15px rgba(52, 152, 219, 0.2);
+            transform: translateY(-2px);
+        }
+
+        input:focus + i {
+            color: #3498db;
+        }
+
+        button {
+            background: linear-gradient(135deg, #3498db, #2ecc71);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.3);
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        button:hover::after {
+            left: 100%;
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .form-group:hover label {
+            color: #3498db;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
-<body class="flex items-center justify-center min-h-screen">
-  <div class="w-full max-w-lg p-8 mx-4 glass-effect form-container">
-    <div class="text-center mb-6">
-      <img src="https://via.placeholder.com/80?text=Logo" alt="Logo" class="mx-auto mb-4 w-16 h-16 rounded-full">
-      <h1 class="text-3xl font-bold text-white">Cosmic Contact</h1>
-      <p class="text-gray-300 mt-2">Join our community and share your details!</p>
+<body>
+    <div class="container">
+        <h1>User Information</h1>
+        <form id="userForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
+                <i class="fas fa-phone"></i>
+            </div>
+            <div class="form-group">
+                <label for="company">Company Name</label>
+                <input type="text" id="company" name="company" placeholder="Enter your company name">
+                <i class="fas fa-building"></i>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="4" placeholder="Enter your message"></textarea>
+            </div>
+            <button type="submit">
+                Submit Information
+            </button>
+        </form>
+        <div id="successMessage" class="success-message">
+            Data submitted successfully! ✨
+        </div>
     </div>
-    <form id="contactForm" class="space-y-5">
-      <div class="input-group">
-        <input type="text" id="name" name="name" class="input-field w-full p-3 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder=" " required>
-        <label for="name" class="input-label">Name</label>
-      </div>
-      <div class="input-group">
-        <input type="email" id="email" name="email" class="input-field w-full p-3 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder=" " required>
-        <label for="email" class="input-label">Email</label>
-      </div>
-      <button type="submit" class="w-full bg-blue-600 text-white py-2.5 rounded-md btn-glow flex items-center justify-center">
-        <span id="buttonText">Submit</span>
-        <div id="spinner" class="spinner"></div>
-      </button>
-    </form>
-    <div class="text-center mt-4">
-      <p id="status" class="text-gray-300 hidden"></p>
-      <span id="successCheck" class="success-check">✔</span>
-    </div>
-    <footer class="text-center text-gray-400 mt-6 text-sm">
-      © <script>document.write(new Date().getFullYear());</script> Cosmic Contact. All rights reserved.
-    </footer>
-  </div>
 
-  <script>
-    const CONFIG = {
-      WEBHOOK_URL: 'https://hook.eu2.make.com/d539wjjqmdhtb5w57tp5errxkhawfwlw' // ✅ Replace this
-    };
+    <script>
+        // Replace 'YOUR_WEBHOOK_URL_HERE' with your actual webhook URL
+        const WEBHOOK_URL = 'YOUR_WEBHOOK_URL_HERE';
 
-    (function () {
-      const form = document.getElementById('contactForm');
-      const statusElement = document.getElementById('status');
-      const spinner = document.getElementById('spinner');
-      const buttonText = document.getElementById('buttonText');
-      const successCheck = document.getElementById('successCheck');
+        document.getElementById('userForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                company: document.getElementById('company').value,
+                message: document.getElementById('message').value,
+                timestamp: new Date().toISOString()
+            };
 
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-
-        if (!name || !email) {
-          statusElement.textContent = 'Please fill in all fields';
-          statusElement.classList.remove('hidden', 'text-green-500');
-          statusElement.classList.add('text-red-500');
-          return;
-        }
-
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          statusElement.textContent = 'Please enter a valid email';
-          statusElement.classList.remove('hidden', 'text-green-500');
-          statusElement.classList.add('text-red-500');
-          return;
-        }
-
-        const payload = {
-          name,
-          email,
-          timestamp: new Date().toISOString()
-        };
-
-        try {
-          statusElement.textContent = 'Sending...';
-          statusElement.classList.remove('hidden', 'text-red-500', 'text-green-500');
-          statusElement.classList.add('text-gray-300');
-          spinner.style.display = 'block';
-          buttonText.style.display = 'none';
-          successCheck.style.display = 'none';
-
-          const response = await fetch(CONFIG.WEBHOOK_URL, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-          });
-
-          spinner.style.display = 'none';
-          buttonText.style.display = 'block';
-
-          if (response.ok) {
-            statusElement.textContent = 'Success! Thanks for joining!';
-            statusElement.classList.remove('text-gray-300');
-            statusElement.classList.add('text-green-500');
-            successCheck.style.display = 'block';
-            form.reset();
-          } else {
-            const responseText = await response.text();
-            statusElement.textContent = `Error: ${response.status} - ${responseText || 'Submission failed'}`;
-            statusElement.classList.remove('text-gray-300');
-            statusElement.classList.add('text-red-500');
-          }
-        } catch (error) {
-          spinner.style.display = 'none';
-          buttonText.style.display = 'block';
-          statusElement.textContent = `Error: ${error.message}`;
-          statusElement.classList.remove('text-gray-300');
-          statusElement.classList.add('text-red-500');
-        }
-
-        statusElement.classList.remove('hidden');
-        setTimeout(() => {
-          statusElement.classList.add('hidden');
-          successCheck.style.display = 'none';
-        }, 4000);
-      });
-    })();
-  </script>
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('userForm').reset();
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'none';
+                    }, 3000);
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(error => {
+                alert('Error submitting form: ' + error.message);
+            });
+        });
+    </script>
 </body>
-</html>
+</html> 
