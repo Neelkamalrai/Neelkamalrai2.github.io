@@ -1,215 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmic Contact</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            min-height: 100vh;
-            background-image: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            font-family: 'Inter', sans-serif;
-        }
-        .glass-effect {
-            background: rgba(20, 20, 30, 0.3);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .form-container {
-            animation: fadeIn 1s ease-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .input-group {
-            position: relative;
-        }
-        .input-field {
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-        .input-field:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
-        }
-        .input-label {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #cbd5e1;
-            pointer-events: none;
-            transition: all 0.3s ease;
-        }
-        .input-field:focus + .input-label,
-        .input-field:not(:placeholder-shown) + .input-label {
-            top: -10px;
-            font-size: 0.75rem;
-            color: #3b82f6;
-            background: rgba(20, 20, 30, 0.9);
-            padding: 0 4px;
-        }
-        .btn-glow:hover {
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
-            transform: translateY(-2px);
-            transition: all 0.3s ease;
-        }
-        .spinner {
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid #3b82f6;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 0.8s linear infinite;
-            display: none;
-            margin-left: 8px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .success-check {
-            display: none;
-            font-size: 1.5rem;
-            color: #22c55e;
-            animation: popIn 0.4s ease;
-        }
-        @keyframes popIn {
-            from { transform: scale(0); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cosmic Contact</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      min-height: 100vh;
+      background-image: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      font-family: 'Inter', sans-serif;
+    }
+    .glass-effect {
+      background: rgba(20, 20, 30, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .form-container {
+      animation: fadeIn 1s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .input-group {
+      position: relative;
+    }
+    .input-field {
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+    .input-field:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+    }
+    .input-label {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #cbd5e1;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    .input-field:focus + .input-label,
+    .input-field:not(:placeholder-shown) + .input-label {
+      top: -10px;
+      font-size: 0.75rem;
+      color: #3b82f6;
+      background: rgba(20, 20, 30, 0.9);
+      padding: 0 4px;
+    }
+    .btn-glow:hover {
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+    .spinner {
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid #3b82f6;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 0.8s linear infinite;
+      display: none;
+      margin-left: 8px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .success-check {
+      display: none;
+      font-size: 1.5rem;
+      color: #22c55e;
+      animation: popIn 0.4s ease;
+    }
+    @keyframes popIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
 </head>
 <body class="flex items-center justify-center min-h-screen">
-    <div class="w-full max-w-lg p-8 mx-4 glass-effect form-container">
-        <div class="text-center mb-6">
-            <img src="https://via.placeholder.com/80?text=Logo" alt="Logo" class="mx-auto mb-4 w-16 h-16 rounded-full">
-            <h1 class="text-3xl font-bold text-white">Cosmic Contact</h1>
-            <p class="text-gray-300 mt-2">Join our community and share your details!</p>
-        </div>
-        <form id="contactForm" class="space-y-5">
-            <div class="input-group">
-                <input type="text" id="name" name="name" class="input-field w-full p-3 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder=" " required>
-                <label for="name" class="input-label">Name</label>
-            </div>
-            <div class="input-group">
-                <input type="email" id="email" name="email" class="input-field w-full p-3 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder=" " required>
-                <label for="email" class="input-label">Email</label>
-            </div>
-            <button type="submit" class="w-full bg-blue-600 text-white py-2.5 rounded-md btn-glow flex items-center justify-center">
-                <span id="buttonText">Submit</span>
-                <div id="spinner" class="spinner"></div>
-            </button>
-        </form>
-        <div class="text-center mt-4">
-            <p id="status" class="text-gray-300 hidden"></p>
-            <span id="successCheck" class="success-check">✔</span>
-        </div>
-        <footer class="text-center text-gray-400 mt-6 text-sm">
-            © <script>document.write(new Date().getFullYear());</script> Cosmic Contact. All rights reserved.
-        </footer>
+  <div class="w-full max-w-lg p-8 mx-4 glass-effect form-container">
+    <div class="text-center mb-6">
+      <img src="https://via.placeholder.com/80?text=Logo" alt="Logo" class="mx-auto mb-4 w-16 h-16 rounded-full">
+      <h1 class="text-3xl font-bold text-white">Cosmic Contact</h1>
+      <p class="text-gray-300 mt-2">Join our community and share your details!</p>
     </div>
+    <form id="contactForm" class="space-y-5">
+      <div class="input-group">
+        <input type="text" id="name" name="name" class="input-field w-full p-3 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder=" " required>
+        <label for="name" class="input-label">Name</label>
+      </div>
+      <div class="input-group">
+        <input type="email" id="email" name="email" class="input-field w-full p-3 rounded-md border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder=" " required>
+        <label for="email" class="input-label">Email</label>
+      </div>
+      <button type="submit" class="w-full bg-blue-600 text-white py-2.5 rounded-md btn-glow flex items-center justify-center">
+        <span id="buttonText">Submit</span>
+        <div id="spinner" class="spinner"></div>
+      </button>
+    </form>
+    <div class="text-center mt-4">
+      <p id="status" class="text-gray-300 hidden"></p>
+      <span id="successCheck" class="success-check">✔</span>
+    </div>
+    <footer class="text-center text-gray-400 mt-6 text-sm">
+      © <script>document.write(new Date().getFullYear());</script> Cosmic Contact. All rights reserved.
+    </footer>
+  </div>
 
-    <script>
-        // Configuration Section
-        const CONFIG = {
-            WEBHOOK_URL: 'https://hooks.airtable.com/workflows/v1/genericWebhook/app5vqz5SOfWWJeNo/wfl5e3FazumLdsXMc/wtrNJTFPGa7xueFhA', // Replace with your Airtable webhook URL
+  <script>
+    const CONFIG = {
+      WEBHOOK_URL: 'YOUR_AIRTABLE_WEBHOOK_URL_HERE' // ✅ Replace this
+    };
+
+    (function () {
+      const form = document.getElementById('contactForm');
+      const statusElement = document.getElementById('status');
+      const spinner = document.getElementById('spinner');
+      const buttonText = document.getElementById('buttonText');
+      const successCheck = document.getElementById('successCheck');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+
+        if (!name || !email) {
+          statusElement.textContent = 'Please fill in all fields';
+          statusElement.classList.remove('hidden', 'text-green-500');
+          statusElement.classList.add('text-red-500');
+          return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          statusElement.textContent = 'Please enter a valid email';
+          statusElement.classList.remove('hidden', 'text-green-500');
+          statusElement.classList.add('text-red-500');
+          return;
+        }
+
+        const payload = {
+          name,
+          email,
+          timestamp: new Date().toISOString()
         };
 
-        // Form handling
-        (function () {
-            const form = document.getElementById('contactForm');
-            const statusElement = document.getElementById('status');
-            const spinner = document.getElementById('spinner');
-            const buttonText = document.getElementById('buttonText');
-            const successCheck = document.getElementById('successCheck');
+        try {
+          statusElement.textContent = 'Sending...';
+          statusElement.classList.remove('hidden', 'text-red-500', 'text-green-500');
+          statusElement.classList.add('text-gray-300');
+          spinner.style.display = 'block';
+          buttonText.style.display = 'none';
+          successCheck.style.display = 'none';
 
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
+          const response = await fetch(CONFIG.WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
 
-                const name = document.getElementById('name').value.trim();
-                const email = document.getElementById('email').value.trim();
+          spinner.style.display = 'none';
+          buttonText.style.display = 'block';
 
-                // Validate inputs
-                if (!name || !email) {
-                    statusElement.textContent = 'Please fill in all fields';
-                    statusElement.classList.remove('hidden', 'text-green-500');
-                    statusElement.classList.add('text-red-500');
-                    return;
-                }
+          if (response.ok) {
+            statusElement.textContent = 'Success! Thanks for joining!';
+            statusElement.classList.remove('text-gray-300');
+            statusElement.classList.add('text-green-500');
+            successCheck.style.display = 'block';
+            form.reset();
+          } else {
+            const responseText = await response.text();
+            statusElement.textContent = `Error: ${response.status} - ${responseText || 'Submission failed'}`;
+            statusElement.classList.remove('text-gray-300');
+            statusElement.classList.add('text-red-500');
+          }
+        } catch (error) {
+          spinner.style.display = 'none';
+          buttonText.style.display = 'block';
+          statusElement.textContent = `Error: ${error.message}`;
+          statusElement.classList.remove('text-gray-300');
+          statusElement.classList.add('text-red-500');
+        }
 
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                    statusElement.textContent = 'Please enter a valid email';
-                    statusElement.classList.remove('hidden', 'text-green-500');
-                    statusElement.classList.add('text-red-500');
-                    return;
-                }
-
-                // Create JSON payload for Airtable
-                const payload = JSON.stringify({
-                    name: name,
-                    email: email,
-                    timestamp: new Date().toISOString()
-                });
-
-                try {
-                    statusElement.textContent = 'Sending...';
-                    statusElement.classList.remove('hidden', 'text-red-500', 'text-green-500');
-                    statusElement.classList.add('text-gray-300');
-                    spinner.style.display = 'block';
-                    buttonText.style.display = 'none';
-                    successCheck.style.display = 'none';
-
-                    const response = await fetch(CONFIG.WEBHOOK_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: payload
-                    });
-
-                    const responseText = await response.text();
-                    console.log('Airtable Response:', responseText); // Debug log
-
-                    spinner.style.display = 'none';
-                    buttonText.style.display = 'block';
-
-                    if (response.ok) {
-                        statusElement.textContent = 'Success! Thanks for joining!';
-                        statusElement.classList.remove('text-gray-300');
-                        statusElement.classList.add('text-green-500');
-                        successCheck.style.display = 'block';
-                        form.reset();
-                    } else {
-                        statusElement.textContent = `Error: ${response.status} - ${responseText || 'Failed to connect'}`;
-                        statusElement.classList.remove('text-gray-300');
-                        statusElement.classList.add('text-red-500');
-                    }
-                } catch (error) {
-                    spinner.style.display = 'none';
-                    buttonText.style.display = 'block';
-                    statusElement.textContent = `Error: ${error.message}`;
-                    statusElement.classList.remove('text-gray-300');
-                    statusElement.classList.add('text-red-500');
-                    console.error('Fetch Error:', error); // Debug log
-                }
-
-                statusElement.classList.remove('hidden');
-                setTimeout(() => {
-                    statusElement.classList.add('hidden');
-                    successCheck.style.display = 'none';
-                }, 4000);
-            });
-        })();
-    </script>
+        statusElement.classList.remove('hidden');
+        setTimeout(() => {
+          statusElement.classList.add('hidden');
+          successCheck.style.display = 'none';
+        }, 4000);
+      });
+    })();
+  </script>
 </body>
 </html>
