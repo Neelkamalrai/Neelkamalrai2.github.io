@@ -1,0 +1,140 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beautiful Landing Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            min-height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-md p-8 mx-4 glass-effect">
+        <h1 class="text-3xl font-bold text-center text-white mb-6">Welcome to Our Site</h1>
+        <p class="text-center text-white mb-8">Enter your details to join us!</p>
+        <form id="userForm" class="space-y-4">
+            <div>
+                <label for="name" class="block text-sm font-medium text-white">Name</label>
+                <input type="text" id="name" name="name" class="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div>
+                <label for="email" class="block text-sm font-medium text-white">Email</label>
+                <input type="email" id="email" name="email" class="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div>
+                <label for="message" class="block text-sm font-medium text-white">Message</label>
+                <textarea id="message" name="message" class="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4"></textarea>
+            </div>
+            <div>
+                <label for="webhookUrl" class="block text-sm font-medium text-white">Airtable Webhook URL</label>
+                <input type="url" id="webhookUrl" name="webhookUrl" class="mt-1 p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="https://api.airtable.com/v0/..." required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200">Submit</button>
+        </form>
+        <p id="status" class="text-center text-white mt-4 hidden"></p>
+    </div>
+
+    <script>
+        document.getElementById('userForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const webhookUrl = document.getElementById('webhookUrl').value;
+            const statusElement = document.getElementById('status');
+
+            const payload = {
+                records: [{
+                    fields: {
+                        Name: name,
+                        Email: email,
+                        Message: message,
+                        Added: new Date().toISOString().split('T')[0]
+                    }
+                }]
+            };
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    statusElement.textContent = 'Data sent successfully to Airtable!';
+                    statusElement.classList.remove('hidden', 'text-red-500');
+                    statusElement.classList.add('text-green-500');
+                    document.getElementById('userForm').reset();
+                } else {
+                    throw new Error('Failed to send data');
+                }
+            } catch (error) {
+                statusElement.textContent = 'Error: Could not send data to Airtable.';
+                statusElement.classList.remove('hidden', 'text-green-500');
+                statusElement.classList.add('text-red-500');
+            }
+
+            setTimeout(() => {
+                statusElement.classList.add('hidden');
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
